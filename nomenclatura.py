@@ -29,7 +29,7 @@ def traduci_elementi(collezione_elementi):
             print(f"Elemento aggiornato: {nome_inglese} -> {nome_italiano}")
 
 def main():
-    # URI di connessione a MongoDB Atlas (sostituisci con il tuo URI)
+    # URI di connessione a MongoDB Atlas
     mongo_uri = "mongodb+srv://jofrancalanci:Cf8m2xsQdZgll1hz@element.2o7dxct.mongodb.net/"
     collezione_elementi = connect_to_mongodb(mongo_uri)
     
