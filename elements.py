@@ -11,7 +11,7 @@ db = client["tavola_periodica"]
 collezione_elementi = db["elementi"]
 
 # Lettura dei dati dal CSV
-df = pd.read_csv('Data/elements.csv')
+df = pd.read_csv(r'C:\Users\JoaquimFrancalanci\OneDrive - ITS Angelo Rizzoli\Documenti\GitHub\IUPAC_name\Data\elemtents.csv')
 
 # Inserimento dei dati nella collezione MongoDB
 elementi_da_inserire = df.to_dict(orient='records')
