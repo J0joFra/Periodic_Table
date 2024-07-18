@@ -34,7 +34,7 @@ def get_nome_iupac(molecola, collezione_elementi):
 # Esempio di utilizzo
 def main():
     # URI di connessione a MongoDB Atlas (sostituisci con il tuo URI)
-    mongo_uri = "mongodb+srv://<username>:<password>@<cluster>.mongodb.net/"
+    mongo_uri = "mongodb+srv://jofrancalanci:Cf8m2xsQdZgll1hz@element.2o7dxct.mongodb.net/"
     collezione_elementi = connect_to_mongodb(mongo_uri)
 
     molecola = "CH3CH2OH"  # Formula chimica della molecola da analizzare
