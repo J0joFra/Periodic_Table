@@ -7,29 +7,21 @@ def connect_to_mongodb(uri):
     collezione_elementi = db["elementi"]  # Nome della collezione degli elementi
     return collezione_elementi
 
-# Funzione per ottenere il nome IUPAC della molecola
-def get_nome_iupac(molecola, collezione_elementi):
-    # Divide la molecola nei suoi componenti (ad esempio: CH3CH2OH -> ['C', 'H', 'C', 'H', 'O', 'H'])
-    componenti = []
-    i = 0
-    while i < len(molecola):
-        if i + 1 < len(molecola) and molecola[i + 1].islower():
-            componenti.append(molecola[i:i + 2])
-            i += 2
-        else:
-            componenti.append(molecola[i])
-            i += 1
-
-    # Trova il nome IUPAC della molecola utilizzando i dati degli elementi chimici da MongoDB
-    nome_iupac = []
-    for composto in componenti:
-        elemento = collezione_elementi.find_one({"simbolo": composto})
+# Funzione per ottenere la formula chimica dal nome IUPAC
+def get_formula_chimica(nome_iupac, collezione_elementi):
+    # Dividi il nome IUPAC in parole
+    parole = nome_iupac.split()
+    
+    formula_chimica = []
+    for parola in parole:
+        # Trova l'elemento corrispondente nella collezione MongoDB
+        elemento = collezione_elementi.find_one({"nome": parola.lower()})
         if elemento:
-            nome_iupac.append(elemento["nome"])
+            formula_chimica.append(elemento["simbolo"])
         else:
-            return "Nome IUPAC non trovato per la molecola"
+            return f"Elemento non trovato per il nome {parola}"
 
-    return ''.join(nome_iupac)
+    return ''.join(formula_chimica)
 
 # Esempio di utilizzo
 def main():
@@ -37,10 +29,9 @@ def main():
     mongo_uri = "mongodb+srv://jofrancalanci:Cf8m2xsQdZgll1hz@element.2o7dxct.mongodb.net/"
     collezione_elementi = connect_to_mongodb(mongo_uri)
 
-    molecola = "CH3CH2OH"  # Formula chimica della molecola da analizzare
-    nome_iupac = get_nome_iupac(molecola, collezione_elementi)
-    print(f"Il nome IUPAC della molecola {molecola} è: {nome_iupac}")
+    nome_iupac = "ossido di magnesio"  # Nome IUPAC della molecola da analizzare
+    formula_chimica = get_formula_chimica(nome_iupac, collezione_elementi)
+    print(f"La formula chimica di {nome_iupac} è: {formula_chimica}")
 
 if __name__ == "__main__":
     main()
-
