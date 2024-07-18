@@ -4,8 +4,11 @@ import pandas as pd
 # Funzione che analizza il composto ricercato
 def analisi_composto(composto):
     divisione = composto.split(" ")
-    if len(divisione) == 3:
-        print("Possibile binario")
+    
+    # Controllo se è un composto binario
+    if len(divisione) <= 3: 
+        if divisione[0].endswith("uro"):
+            print("Composto binario")
     print(divisione)
     return divisione
 
