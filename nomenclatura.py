@@ -16,11 +16,27 @@ def analisi_composto(composto):
 # Funzione per i composti binari
 def composto_binario(divisione):
     # Controllo la presenza di 'di'
-    if 'di' in divisione[1]:
+    if divisione[1] == 'di':
         divisione.remove('di') # Rimozione di 'di'
-    el_1 = divisione[1]
+    el_1 = divisione[1] #unità positiva (metallo)
     el_parziale = divisione[0].removesuffix('uro')
+    el = el_parziale.capitalize()
     print(f"{el_1} + {el_parziale}")
+
+# Funzione per cercare il nome completo di un elemento  
+def cerca_elemento(el):
+    # Recupera tutti gli elementi
+    elementi = collezione_elementi.find()
+    
+    for elemento in elementi:
+        # Recupera tutti i nomi italiani
+        nome_elemento = elemento.get("name_italian")
+        
+        if nome_elemento.startwith(el): # Nome parziale da cercare
+            el_2 = nome_elemento
+            print(el_2)
+        else:
+            print("Non trovato")
     
 # Composto da ricercare
 composto = input("Inserisci il nome di un composto: ").lower()
