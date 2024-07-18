@@ -11,5 +11,5 @@ db = client["tavola_periodica"]
 collezione_elementi = db["elementi"]
 
 # Lettura dei dati dal CSV con Pandas (esempio)
-df = pd.read_csv('elementi_chimici.csv')
+df = pd.read_csv('Data\elemtents.csv')
 
