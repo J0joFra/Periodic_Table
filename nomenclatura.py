@@ -31,16 +31,17 @@ def composto_binario(divisione, collezione_elementi):
     el = el_parziale.capitalize()
     el_2 = cerca_elemento(el, collezione_elementi)
     
-    if el_2:
-        print(f"{el_1.capitalize()} + {el_2}")
+    simbolo_el_1 = cerca_simbolo(el_1.capitalize(), collezione_elementi)
+    simbolo_el_2 = cerca_simbolo(el_2, collezione_elementi)
+    
+    if simbolo_el_1 and simbolo_el_2:
+        print(f"{simbolo_el_1} + {simbolo_el_2}")
     else:
-        print(f"Elemento '{el}' non trovato.")
+        print(f"Simbolo non trovato per uno o entrambi gli elementi: {el_1.capitalize()}, {el_2}")
 
 # Funzione per cercare il nome completo di un elemento  
 def cerca_elemento(el, collezione_elementi):
-    # Recupera tutti gli elementi
     elementi = collezione_elementi.find()
-
     for elemento in elementi:
         # Recupera tutti i nomi italiani
         nome_elemento = elemento.get("name_italian", "")
@@ -52,7 +53,20 @@ def cerca_elemento(el, collezione_elementi):
     
     return None
 
-
+# Funzione per ottenere i simboli di un elemento
+def cerca_simbolo(nome, collezione_elementi):
+    elementi = collezione_elementi.find()
+    for elemento in elementi:
+        # Recupera il nome dell'elemento
+        nome_elemento = elemento.get("name_italian", "")
+        # Recupera il simbolo dell'elemento
+        simbolo_elemento = elemento.get("symbol", "")
+        
+        # Controlla se il nome dell'elemento corrisponde al nome dato
+        if nome_elemento.lower() == nome.lower():
+            return simbolo_elemento
+    
+    return None
 
 # URI di connessione a MongoDB
 mongo_uri = "mongodb+srv://jofrancalanci:Cf8m2xsQdZgll1hz@element.2o7dxct.mongodb.net/"
