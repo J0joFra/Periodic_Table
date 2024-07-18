@@ -18,7 +18,9 @@ def composto_binario(divisione):
     # Controllo la presenza di 'di'
     if 'di' in divisione[1]:
         divisione.remove('di') # Rimozione di 'di'
-    print("Ciao")
+    el_1 = divisione[1]
+    el_parziale = divisione[0].removesuffix('uro')
+    print(f"{el_1} + {el_parziale}")
     
 # Composto da ricercare
 composto = input("Inserisci il nome di un composto: ").lower()
