@@ -25,19 +25,23 @@ def composto_binario(divisione, collezione_elementi):
     # Controllo la presenza di 'di'
     if 'di' in divisione:
         divisione.remove('di') # Rimozione di 'di'
+    el_1 = divisione[1] #unità positiva
     
-    el_1 = divisione[1] #unità positiva (metallo)
     el_parziale = divisione[0].removesuffix('uro')
     el = el_parziale.capitalize()
+    # Secondo elemento
     el_2 = cerca_elemento(el, collezione_elementi)
     
+    print(f"Il {composto} è composto da {el_2} + {el_1}")
+    
+    # Costruzione della formula
     simbolo_el_1 = cerca_simbolo(el_1.capitalize(), collezione_elementi)
     simbolo_el_2 = cerca_simbolo(el_2, collezione_elementi)
     
     if simbolo_el_1 and simbolo_el_2:
-        print(f"{simbolo_el_1} + {simbolo_el_2}")
+        print(f"{simbolo_el_1}{simbolo_el_2}")
     else:
-        print(f"Simbolo non trovato per uno o entrambi gli elementi: {el_1.capitalize()}, {el_2}")
+        print(f"Simbolo non trovato per uno o entrambi gli elementi")
 
 # Funzione per cercare il nome completo di un elemento  
 def cerca_elemento(el, collezione_elementi):
