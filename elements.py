@@ -10,4 +10,6 @@ db = client["tavola_periodica"]
 # Creazione o selezione della collezione per gli elementi chimici
 collezione_elementi = db["elementi"]
 
+# Lettura dei dati dal CSV con Pandas (esempio)
+df = pd.read_csv('elementi_chimici.csv')
 
