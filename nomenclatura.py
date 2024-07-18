@@ -32,11 +32,14 @@ def cerca_elemento(el):
         # Recupera tutti i nomi italiani
         nome_elemento = elemento.get("name_italian")
         
-        if nome_elemento.startwith(el): # Nome parziale da cercare
+        # Nome senza suffisso da cercare
+        if nome_elemento.startwith(el):
+            # Salvataggio nome completo
             el_2 = nome_elemento
             print(el_2)
         else:
             print("Non trovato")
+    return el_2
     
 # Composto da ricercare
 composto = input("Inserisci il nome di un composto: ").lower()
