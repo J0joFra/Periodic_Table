@@ -22,9 +22,16 @@ def analisi_composto(composto, collezione_elementi):
 
 # Funzione per i composti binari
 def composto_binario(divisione, collezione_elementi):
-    # Controllo la presenza di 'di'
+    # Controlla la presenza di 'di'
     if 'di' in divisione:
-        divisione.remove('di') # Rimozione di 'di'
+        divisione.remove('di')
+    # Controlla se è un "Idruro"
+    if divisione[0].startswith('idr'):
+        el_2 = 'Idrogeno'
+    # Controlla se è un "Solfuro"
+    if divisione[0].startswith('solf'):
+        el_2 = 'Zolfo'
+        
     el_1 = divisione[1] #unità positiva
     
     el_parziale = divisione[0].removesuffix('uro')
@@ -36,7 +43,7 @@ def composto_binario(divisione, collezione_elementi):
     
     # Costruzione della formula
     simbolo_el_1 = cerca_simbolo(el_1.capitalize(), collezione_elementi)
-    simbolo_el_2 = cerca_simbolo(el_2, collezione_elementi)
+    simbolo_el_2 = cerca_simbolo(el_2.capitalize(), collezione_elementi)
     
     if simbolo_el_1 and simbolo_el_2:
         print(f"{simbolo_el_1}{simbolo_el_2}")
