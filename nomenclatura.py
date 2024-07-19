@@ -25,14 +25,16 @@ def composto_binario(divisione, collezione_elementi):
     # Controlla la presenza di 'di'
     if 'di' in divisione:
         divisione.remove('di')
+    # Unità positiva   
+    el_1 = divisione[1] 
+    
     # Controlla se è un "Idruro"
     if divisione[0].startswith('idr'):
         el_2 = 'Idrogeno'
+        formatta_idruro(divisione, collezione_elementi)
     # Controlla se è un "Solfuro"
     if divisione[0].startswith('solf'):
         el_2 = 'Zolfo'
-        
-    el_1 = divisione[1] #unità positiva
     
     el_parziale = divisione[0].removesuffix('uro')
     el = el_parziale.capitalize()
@@ -78,6 +80,21 @@ def cerca_simbolo(nome, collezione_elementi):
             return simbolo_elemento
     
     return None
+
+# Funzione per determinare gli idruri
+def formatta_idruro(el_1, collezione_elementi):
+    # Controlla il gruppo di el_1
+    elementi = collezione_elementi.find()
+    for elemento in elementi:
+        # Recupera il gruppo dell'elemento
+        gruppo_elemento = elemento.get("group_id", "")
+        # Recupera il simbolo dell'elemento
+        simbolo_elemento = elemento.get("symbol", "")
+        
+        # Controlla se il nome dell'elemento corrisponde al nome dato
+        if nome_elemento.lower() == nome.lower():
+            return simbolo_elemento
+    return
 
 # URI di connessione a MongoDB
 mongo_uri = "mongodb+srv://jofrancalanci:Cf8m2xsQdZgll1hz@element.2o7dxct.mongodb.net/"
