@@ -50,8 +50,7 @@ def composto_binario(divisione, collezione_elementi):
         # Calcolo e stampa del numero di ossidazione
         n_ox_1 = calcola_numero_ossidazione(el_1.capitalize(), collezione_elementi)
         n_ox_2 = calcola_numero_ossidazione(el_2, collezione_elementi)
-        print(f"Numero di ossidazione di {el_1}: {n_ox_1}")
-        print(f"Numero di ossidazione di {el_2}: {n_ox_2}")
+        print(f"Numero di ossidazione:\n{el_1}={n_ox_1}\n{el_2}={n_ox_2}")
     else:
         print(f"Simbolo non trovato per uno o entrambi gli elementi")
 
@@ -66,7 +65,6 @@ def cerca_elemento(el, collezione_elementi):
         if nome_elemento.startswith(el):
             # Salvataggio nome completo
             return nome_elemento
-    
     return None
 
 # Funzione per ottenere i simboli di un elemento
@@ -81,7 +79,6 @@ def cerca_simbolo(nome, collezione_elementi):
         # Controlla se il nome dell'elemento corrisponde al nome dato
         if nome_elemento.lower() == nome.lower():
             return simbolo_elemento
-    
     return None
 
 # Funzione per determinare gli idruri
@@ -94,12 +91,23 @@ def formatta_idruro(el_1, collezione_elementi):
         gruppo_elemento = elemento.get("group_id", "")
         # Recupera il simbolo dell'elemento
         simbolo_elemento = elemento.get("symbol", "")
+        # Recupero il numero di ossidazione
+        nox_el_1 = elemento.get("oxidation_states", "")
         
         if nome_elemento.lower() == el_1.lower():
             if gruppo_elemento in [1, 2] and nome_elemento not in ['Litio', 'Berillio']:
-                # Idruri metallici
-                formula = f"{simbolo_elemento}H"
-                print(f"Idruro metallico: {formula}")
+                # n.o.x idrogreno = -1
+                nox_h = -1
+                nox = nox_el_1 + nox_h
+                
+                # Controllo che la somma algebrica dei n.ox sia = 0
+                if nox != 0:
+                    nox = - nox
+                    formula = f"{simbolo_elemento}H{nox}"
+                    print(F"{formula}")  
+                else:         
+                    formula = f"{simbolo_elemento}H"
+                    print(f"Idruro metallico: {formula}")
             else:
                 # Idruri covalenti
                 formula = f"H{simbolo_elemento}"
