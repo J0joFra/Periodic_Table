@@ -31,28 +31,29 @@ def composto_binario(divisione, collezione_elementi):
     # Controlla se è un "Idruro"
     if divisione[0].startswith('idr'):
         el_2 = 'Idrogeno'
-        formatta_idruro(el_1, collezione_elementi)
+        formula = formatta_idruro(el_1, collezione_elementi)
     # Controlla se è un "Solfuro"
     elif divisione[0].startswith('solf'):
         el_2 = 'Zolfo'
-    
+        formula = f"S{cerca_simbolo(el_1.capitalize(), collezione_elementi)}"
     else:
         el_parziale = divisione[0].removesuffix('uro')
         el = el_parziale.capitalize()
         # Secondo elemento
         el_2 = cerca_elemento(el, collezione_elementi)
+        formula = f"{cerca_simbolo(el_2, collezione_elementi)}{cerca_simbolo(el_1.capitalize(), collezione_elementi)}"
     
     if el_2:
         print(f"Il {composto} è composto da {el_2} + {el_1}")
-    
-        # Costruzione della formula
-        simbolo_el_1 = cerca_simbolo(el_1.capitalize(), collezione_elementi)
-        simbolo_el_2 = cerca_simbolo(el_2.capitalize(), collezione_elementi)
-    
-        if simbolo_el_1 and simbolo_el_2:
-            print(f"{simbolo_el_1}{simbolo_el_2}")
-        else:
-            print(f"Simbolo non trovato per uno o entrambi gli elementi")
+        print(f"Formula: {formula}")
+        
+        # Calcolo e stampa del numero di ossidazione
+        n_ox_1 = calcola_numero_ossidazione(el_1.capitalize(), collezione_elementi)
+        n_ox_2 = calcola_numero_ossidazione(el_2, collezione_elementi)
+        print(f"Numero di ossidazione di {el_1}: {n_ox_1}")
+        print(f"Numero di ossidazione di {el_2}: {n_ox_2}")
+    else:
+        print(f"Simbolo non trovato per uno o entrambi gli elementi")
 
 # Funzione per cercare il nome completo di un elemento  
 def cerca_elemento(el, collezione_elementi):
@@ -104,6 +105,15 @@ def formatta_idruro(el_1, collezione_elementi):
                 formula = f"H{simbolo_elemento}"
                 print(f"Idruro covalente: {formula}")
             return formula
+    return None
+
+# Funzione per calcolare il numero di ossidazione
+def calcola_numero_ossidazione(el, collezione_elementi):
+    elemento = collezione_elementi.find_one({"name_italian": el})
+    if elemento:
+        n_ox_list = elemento.get("oxidation_states", [])
+        if n_ox_list:
+            return n_ox_list
     return None
 
 # URI di connessione a MongoDB
