@@ -23,32 +23,42 @@ def get_all_elements():
     elementi = list(collezione_elementi.find({}, {"_id": 0}))  # Esclude il campo '_id'
     return jsonify(elementi)
 
-# Route per ottenere elementi filtrati in base a una caratteristica specifica
+# Route per ottenere elementi con una caratteristica specifica in rilievo
 @app.route('/elementi/<caratteristica>', methods=['GET'])
 def get_elements_by_characteristic(caratteristica):
-    # Parametro per il valore minimo della caratteristica (es: 'valore_min')
     valore_min = request.args.get("valore_min", type=float, default=None)
     query = {}
 
+    # Controllo se la caratteristica è presente e se un valore minimo è fornito
     if valore_min is not None:
         query[caratteristica] = {"$gte": valore_min}
 
-    elementi = list(collezione_elementi.find(query, {"_id": 0, caratteristica: 1, "nome": 1}))
+    elementi = list(collezione_elementi.find(query, {"_id": 0, caratteristica: 1, "name": 1, "symbol": 1}))
     return jsonify(elementi)
 
-# Route per cercare un elemento per nome o simbolo
+# Route per cercare un elemento per nome, simbolo o numero atomico
 @app.route('/elementi/cerca', methods=['GET'])
 def search_element():
     query_param = request.args.get("query", "")
     query = {
         "$or": [
-            {"nome": {"$regex": re.compile(query_param, re.IGNORECASE)}},
-            {"simbolo": {"$regex": re.compile(query_param, re.IGNORECASE)}}
+            {"name": {"$regex": re.compile(query_param, re.IGNORECASE)}},
+            {"symbol": {"$regex": re.compile(query_param, re.IGNORECASE)}},
+            {"atomic_number": int(query_param) if query_param.isdigit() else None}
         ]
     }
 
     elementi = list(collezione_elementi.find(query, {"_id": 0}))
     return jsonify(elementi)
+
+# Route per ottenere proprietà dettagliate di un singolo elemento dato il simbolo
+@app.route('/elemento/<simbolo>', methods=['GET'])
+def get_element_details(simbolo):
+    elemento = collezione_elementi.find_one({"symbol": simbolo}, {"_id": 0})
+    if elemento:
+        return jsonify(elemento)
+    else:
+        return jsonify({"error": "Elemento non trovato"}), 404
 
 if __name__ == "__main__":
     # Avvia il server Flask
