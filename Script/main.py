@@ -17,6 +17,11 @@ collezione_elementi = connect_to_mongodb(mongo_uri)
 # Creazione dell'app Flask
 app = Flask(__name__)
 
+# Route principale per confermare che il server è in esecuzione
+@app.route('/', methods=['GET'])
+def index():
+    return "Server Flask in esecuzione!"
+
 # Route per ottenere tutti gli elementi della tavola periodica
 @app.route('/elementi', methods=['GET'])
 def get_all_elements():
