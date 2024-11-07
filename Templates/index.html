@@ -4,20 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tavola Periodica 3D</title>
-    <!-- Carica Three.js da CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <style>
-        body { margin: 0; }
-        canvas { display: block; }
-        #control-panel {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 10px;
-            border-radius: 8px;
-        }
-    </style>
 </head>
 <body>
 
@@ -26,61 +12,8 @@
     <select id="characteristic">
         <option value="atomic_radius">Raggio Atomico</option>
         <option value="density">Densità</option>
-        <!-- Aggiungi altre caratteristiche come preferisci -->
     </select>
     <button onclick="updateElements()">Aggiorna</button>
 </div>
-
-<script>
-    // Inizializzazione di Three.js
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
-
-    // Posizione della camera
-    camera.position.z = 50;
-
-    // Funzione per creare una sfera per ogni elemento
-    function createElementSphere(radius, color, x, y, z) {
-        const geometry = new THREE.SphereGeometry(radius, 32, 32);
-        const material = new THREE.MeshBasicMaterial({ color: color });
-        const sphere = new THREE.Mesh(geometry, material);
-        sphere.position.set(x, y, z);
-        scene.add(sphere);
-    }
-
-    // Funzione per aggiornare gli elementi basata sulla caratteristica
-    async function updateElements() {
-        const characteristic = document.getElementById("characteristic").value;
-        
-        // Chiama l'API Flask per ottenere gli elementi in base alla caratteristica selezionata
-        const response = await fetch(`/elementi/${characteristic}`);
-        const elements = await response.json();
-
-        // Cancella la scena precedente
-        while (scene.children.length > 0) {
-            scene.remove(scene.children[0]);
-        }
-
-        // Aggiungi elementi alla scena
-        elements.forEach((element, index) => {
-            // Usa un calcolo per posizionare gli elementi (esempio di griglia)
-            const x = (index % 10) * 5;
-            const y = Math.floor(index / 10) * 5;
-            const radius = element[characteristic] / 50 || 1;  // Scala il raggio
-            const color = parseInt(element.cpk_color.replace("#", "0x")); // Converte il colore in esadecimale
-            createElementSphere(radius, color, x, y, 0);
-        });
-    }
-
-    function animate() {
-        requestAnimationFrame(animate);
-        renderer.render(scene, camera);
-    }
-    
-    animate();
-</script>
 </body>
 </html>
