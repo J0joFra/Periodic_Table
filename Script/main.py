@@ -1,5 +1,5 @@
+from flask import Flask, jsonify, request, render_template
 import pymongo
-from flask import Flask, jsonify, request
 import re
 import os
 
@@ -22,9 +22,10 @@ app = Flask(__name__)
 def index():
     return "Server Flask in esecuzione!"
 
-@app.route('/index')
+# Route per visualizzare index.html
+@app.route('/index', methods=['GET'])
 def index_page():
-    return app.send_static_file('index.html')
+    return render_template('index.html')
 
 # Route per ottenere tutti gli elementi della tavola periodica
 @app.route('/elementi', methods=['GET'])
