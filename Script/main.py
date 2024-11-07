@@ -22,9 +22,9 @@ app = Flask(__name__)
 def index():
     return "Server Flask in esecuzione!"
 
-# Route per visualizzare index.html
 @app.route('/index', methods=['GET'])
 def index_page():
+    print(os.path.abspath('templates'))
     return render_template('index.html')
 
 # Route per ottenere tutti gli elementi della tavola periodica
