@@ -22,6 +22,10 @@ app = Flask(__name__)
 def index():
     return "Server Flask in esecuzione!"
 
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
+
 # Route per ottenere tutti gli elementi della tavola periodica
 @app.route('/elementi', methods=['GET'])
 def get_all_elements():
