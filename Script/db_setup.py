@@ -5,7 +5,7 @@ import pandas as pd
 def connect_to_mongodb(uri):
     client = pymongo.MongoClient(uri)
     db = client["tavola_periodica"]  # Nome del database
-    collezione_elementi = db["elementi"]  # Nome della collezione degli elementi
+    collezione_elementi = db["elements"]  # Nome della collezione degli elementi
     return client, collezione_elementi
 
 def create_db(client):
@@ -15,8 +15,8 @@ def create_db(client):
     # Creazione della collezione per gli elementi
     collezione_elementi = db["elementi"]
 
-    df = pd.read_csv(r'C:\Users\JoaquimFrancalanci\OneDrive - ITS Angelo Rizzoli\Documenti\GitHub\IUPAC_name\Data\elemtents.csv')
-
+    df = pd.read_csv("elements.csv") 
+    
     # Inserimento dei dati nella collezione MongoDB
     elementi_da_inserire = df.to_dict(orient='records')
     collezione_elementi.insert_many(elementi_da_inserire)
