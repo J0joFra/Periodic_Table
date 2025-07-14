@@ -55,7 +55,7 @@ def traduci_elementi(collezione_elementi):
 
 def main():
     # URI di connessione a MongoDB Atlas
-    mongo_uri = "mongodb+srv://jofrancalanci:Cf8m2xsQdZgll1hz@element.2o7dxct.mongodb.net/"
+    mongo_uri = "mongodb+srv://jofrancalanci:d9T9r1EJtHAWQP6U@chimica.m7qhhot.mongodb.net/"
     client, collezione_elementi = connect_to_mongodb(mongo_uri)
     
     # Crea/seleziona DB
