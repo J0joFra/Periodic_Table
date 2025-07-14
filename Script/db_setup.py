@@ -1,6 +1,7 @@
 import pymongo
 from googletrans import Translator
 import pandas as pd
+import os
 
 def connect_to_mongodb(uri):
     client = pymongo.MongoClient(uri)
@@ -11,15 +12,22 @@ def connect_to_mongodb(uri):
 def create_db(client):
     # Creazione del database
     db = client["tavola_periodica"]
-
-    # Creazione della collezione per gli elementi
     collezione_elementi = db["elementi"]
 
-    df = pd.read_csv("elements.csv") 
-    
+    # Percorso del file 'elements.csv' nella stessa cartella dello script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(script_dir, "elements.csv")
+
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"File 'elements.csv' non trovato in: {file_path}")
+
+    # Lettura del CSV
+    df = pd.read_csv(file_path)
+
     # Inserimento dei dati nella collezione MongoDB
     elementi_da_inserire = df.to_dict(orient='records')
     collezione_elementi.insert_many(elementi_da_inserire)
+
     return collezione_elementi
 
 def aggiungi_numeri_ossidazione(collezione_elementi, numeri_ossidazione):
